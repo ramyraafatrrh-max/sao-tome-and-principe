@@ -1,177 +1,132 @@
-/* São Tomé & Príncipe Research App - Main Stylesheet
-   Created to fix overlapping layout issues in mobile/desktop views.
-*/
+/* style.css - Elite Research Edition */
 
 :root {
-  --ocean:       #0b3d5e;
-  --ocean-mid:   #1a6fa0;
-  --ocean-light: #e8f3fa;
-  --gold:        #b8832e;
-  --gold-bright: #d4a44c;
-  --gold-light:  #fdf4e3;
-  --forest:      #1c5238;
-  --mist:        #f2f5f8;
+  --ocean:       #0b3d5e; /* Deep Navy */
+  --gold:        #b8832e; /* Muted Gold */
+  --forest:      #1c5238; /* Tropical Green */
+  --mist:        #f4f7f9; /* Clean Background */
   --white:       #ffffff;
-  --border:      #e0e8f0;
-  --text:        #192534;
-  --text-sub:    #5a7080;
-  --radius-lg:   18px;
-  --radius-md:   12px;
-  --shadow-sm:   0 4px 18px rgba(11,61,94,.09);
-  --shadow-md:   0 12px 40px rgba(11,61,94,.14);
-  --dur:         380ms;
-  --ease:        cubic-bezier(.4,0,.15,1);
+  --text:        #1a2a36;
+  --radius:      14px;
+  --shadow:      0 10px 30px rgba(11, 61, 94, 0.08);
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--mist);
   color: var(--text);
-  background: var(--mist);
-  min-height: 100vh;
   overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* --- PAGE SYSTEM (Fixes the overlapping view issues) --- */
+/* --- THE FIX: Page Isolation --- */
 .page {
-  position: fixed; 
-  inset: 0;
-  overflow-y: auto;
-  display: flex; 
-  flex-direction: column;
-  transform: translateX(100%);
-  opacity: 0;
-  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-  pointer-events: none;
+  display: none; /* Physically removes the page from view */
+  min-height: 100vh;
+  width: 100%;
   background: var(--mist);
-  z-index: 1;
+  flex-direction: column;
 }
 
 .page.active {
-  transform: translateX(0);
-  opacity: 1;
-  pointer-events: all;
-  z-index: 10;
+  display: flex; /* Only shows when active */
+  animation: fadeIn 0.4s ease-out;
 }
 
-.page.exit-left {
-  transform: translateX(-10%);
-  opacity: 0;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- HERO BANNER --- */
+/* --- ELITE HEADER --- */
 .banner {
-  background: linear-gradient(150deg, #071e30 0%, #0d4d7a 45%, #0f3d28 100%);
-  color: var(--white);
-  padding: 50px 20px;
+  background: linear-gradient(135deg, #071e30 0%, var(--ocean) 100%);
+  color: white;
+  padding: 60px 20px;
   text-align: center;
-  flex-shrink: 0;
-  position: relative;
+  border-bottom: 3px solid var(--gold);
 }
 
-.banner-flag { font-size: 50px; margin-bottom: 10px; display: block; }
+.banner-flag { font-size: 55px; margin-bottom: 15px; display: block; }
 
 .banner-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  letter-spacing: -0.5px;
   font-weight: 600;
 }
 
-/* --- NAVIGATION BAR --- */
-.banner-bar {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  padding: 12px 30px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.back-btn {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  padding: 6px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-/* --- GRID SYSTEM (Ensures cards don't overlap) --- */
+/* --- GRID LAYOUT (Ensures no overlap) --- */
 .home-grid, .sections-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
-  padding: 40px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+  padding: 50px 20px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* --- CARD AESTHETIC --- */
 .chapter-card, .section-card {
   background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 25px;
+  border-radius: var(--radius);
+  padding: 35px;
   cursor: pointer;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(184, 131, 46, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .chapter-card:hover {
-  transform: translateY(-5px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-8px);
+  border-color: var(--gold);
 }
 
 .card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   color: var(--ocean);
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
-/* --- SWOT ANALYSIS LAYOUT --- */
-.swot-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+/* --- BREADCRUMBS --- */
+.banner-bar {
+  background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(8px);
+  padding: 12px 40px;
+  display: flex;
+  align-items: center;
   gap: 15px;
-  margin-top: 20px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.8rem;
 }
 
-.swot-q {
-  padding: 20px;
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
+.back-btn {
+  background: var(--gold);
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.swot-q.s { background: #eef7f2; border-color: #96d1b4; }
-.swot-q.w { background: #fef6ec; border-color: #f0c888; }
-.swot-q.o { background: var(--ocean-light); border-color: #84c0e0; }
-.swot-q.t { background: #fef0f0; border-color: #f0a8a8; }
-
-/* --- REFERENCE TABLES --- */
-.refs-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  font-size: 0.85rem;
+/* --- CONTENT REFINEMENT --- */
+.content-card {
   background: white;
+  padding: 40px;
+  border-radius: var(--radius);
+  margin-bottom: 30px;
+  box-shadow: var(--shadow);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.refs-table th, .refs-table td {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  text-align: left;
-}
-
-.refs-table th { background: var(--ocean); color: white; }
-
-/* --- RESPONSIVE ADJUSTMENTS --- */
-@media (max-width: 768px) {
-  .swot-grid { grid-template-columns: 1fr; }
-  .home-grid { padding: 20px; }
-  .banner { padding: 30px 15px; }
+/* Mobile Fixes */
+@media (max-width: 700px) {
+  .home-grid { grid-template-columns: 1fr; padding: 25px 15px; }
+  .banner { padding: 40px 15px; }
 }
