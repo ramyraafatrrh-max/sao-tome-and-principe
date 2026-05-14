@@ -1,7 +1,11 @@
 /* style.css - Elite Research Edition */
 
 :root {
-  --ocean:       #0b3d5e; /* Deep Navy */
+  --ocean:       #0b3d5e;
+--ocean-mid:   #1a6fa0;
+--ocean-light: #e8f3fa;
+--border:      #e0e8f0;
+--text-sub:    #5a7080; /* Deep Navy */
   --gold:        #b8832e; /* Muted Gold */
   --forest:      #1c5238; /* Tropical Green */
   --mist:        #f4f7f9; /* Clean Background */
@@ -187,3 +191,10 @@ body {
   color: var(--ocean);
   font-family: 'Cormorant Garamond', serif;
 }
+
+.table-wrap{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;margin:12px 0;}
+.table-wrap .data-table{min-width:720px;}
+.data-table td{white-space:pre-wrap;word-break:break-word;}
+.data-table td a{word-break:break-all;}
+
+.section-body{max-width:900px;margin:0 auto;padding:40px 20px;}
