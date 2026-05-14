@@ -1,0 +1,177 @@
+/* São Tomé & Príncipe Research App - Main Stylesheet
+   Created to fix overlapping layout issues in mobile/desktop views.
+*/
+
+:root {
+  --ocean:       #0b3d5e;
+  --ocean-mid:   #1a6fa0;
+  --ocean-light: #e8f3fa;
+  --gold:        #b8832e;
+  --gold-bright: #d4a44c;
+  --gold-light:  #fdf4e3;
+  --forest:      #1c5238;
+  --mist:        #f2f5f8;
+  --white:       #ffffff;
+  --border:      #e0e8f0;
+  --text:        #192534;
+  --text-sub:    #5a7080;
+  --radius-lg:   18px;
+  --radius-md:   12px;
+  --shadow-sm:   0 4px 18px rgba(11,61,94,.09);
+  --shadow-md:   0 12px 40px rgba(11,61,94,.14);
+  --dur:         380ms;
+  --ease:        cubic-bezier(.4,0,.15,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--mist);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- PAGE SYSTEM (Fixes the overlapping view issues) --- */
+.page {
+  position: fixed; 
+  inset: 0;
+  overflow-y: auto;
+  display: flex; 
+  flex-direction: column;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
+  pointer-events: none;
+  background: var(--mist);
+  z-index: 1;
+}
+
+.page.active {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: all;
+  z-index: 10;
+}
+
+.page.exit-left {
+  transform: translateX(-10%);
+  opacity: 0;
+}
+
+/* --- HERO BANNER --- */
+.banner {
+  background: linear-gradient(150deg, #071e30 0%, #0d4d7a 45%, #0f3d28 100%);
+  color: var(--white);
+  padding: 50px 20px;
+  text-align: center;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.banner-flag { font-size: 50px; margin-bottom: 10px; display: block; }
+
+.banner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 600;
+}
+
+/* --- NAVIGATION BAR --- */
+.banner-bar {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 12px 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.back-btn {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 6px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* --- GRID SYSTEM (Ensures cards don't overlap) --- */
+.home-grid, .sections-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chapter-card, .section-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 25px;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chapter-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--ocean);
+  margin: 10px 0;
+}
+
+/* --- SWOT ANALYSIS LAYOUT --- */
+.swot-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.swot-q {
+  padding: 20px;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+}
+
+.swot-q.s { background: #eef7f2; border-color: #96d1b4; }
+.swot-q.w { background: #fef6ec; border-color: #f0c888; }
+.swot-q.o { background: var(--ocean-light); border-color: #84c0e0; }
+.swot-q.t { background: #fef0f0; border-color: #f0a8a8; }
+
+/* --- REFERENCE TABLES --- */
+.refs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 0.85rem;
+  background: white;
+}
+
+.refs-table th, .refs-table td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.refs-table th { background: var(--ocean); color: white; }
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+  .swot-grid { grid-template-columns: 1fr; }
+  .home-grid { padding: 20px; }
+  .banner { padding: 30px 15px; }
+}
