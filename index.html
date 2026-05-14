@@ -6,7 +6,6 @@
 <title>São Tomé and Príncipe</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-<link rel="stylesheet" href="style.css">
 :root {
   --ocean:       #0b3d5e;
   --ocean-mid:   #1a6fa0;
@@ -44,32 +43,43 @@ body {
 /* ══════════════════════════════════════════════
    PAGE SYSTEM — layered slide transitions
 ══════════════════════════════════════════════ */
+/* Optimized Page System */
 .page {
-  position:fixed; inset:0;
-  overflow-y:auto;
-  display:flex; flex-direction:column;
-  will-change:transform,opacity;
-  /* default: hidden behind */
-  transform:translateX(100%);
-  opacity:0;
-  transition:transform var(--dur) var(--ease),
-             opacity var(--dur) var(--ease);
-  pointer-events:none;
-  background:var(--mist);
-  z-index:1;
+  position: fixed; 
+  inset: 0;
+  overflow-y: auto;
+  display: flex; 
+  flex-direction: column;
+  background: var(--mist);
+  
+  /* Transition Logic */
+  opacity: 0;
+  visibility: hidden; /* This prevents the "overlap" layer issue */
+  transform: translateX(30px); /* Subtle shift instead of full 100% for smoother loading */
+  transition: 
+    transform var(--dur) var(--ease),
+    opacity var(--dur) var(--ease),
+    visibility var(--dur); /* Match transition duration */
+  
+  pointer-events: none;
+  z-index: 1;
 }
+
 .page.active {
-  transform:translateX(0);
-  opacity:1;
-  pointer-events:all;
-  z-index:10;
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+  pointer-events: all;
+  z-index: 10;
 }
+
 .page.exit-left {
-  transform:translateX(-6%);
-  opacity:0;
-  pointer-events:none;
-  z-index:5;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-30px);
+  z-index: 5;
 }
+
 /* home page starts visible */
 #homePage {
   transform:translateX(0);
